@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <item type="id" name="distance_edit_text" />
+        <item type="id" name="speed_edit_text" />
+        <item type="id" name="time_edit_text" />
+        <item type="id" name="distance_type" />
+        <item type="id" name="speed_type" />
+        <item type="id" name="time_type" />
+        <item type="id" name="clear_distance_speed" />
+        <item type="id" name="calculate_distance_speed" />
+        
+        <item type="id" name="true_heading_edit_text" />
+		<item type="id" name="true_air_speed_edit_text" />
+		<item type="id" name="wind_direction_edit_text" />
+		<item type="id" name="wind_speed_edit_text" />
+		<item type="id" name="ground_track_edit_text" />
+		<item type="id" name="ground_speed_edit_text" />
+        <item type="id" name="clear_wind_triangle" />
+        <item type="id" name="calculate_wind_triangle" />
+        
+        <item type="id" name="change_solve_wind_triangle" />
+        
+        <item type="id" name="draw_vector" />
+</resources>

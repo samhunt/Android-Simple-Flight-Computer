@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.simpleflightcomputer"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:restoreAnyVersion="true"
+        android:restoreNeedsApplication="false"
+        android:theme="@android:style/Theme.NoTitleBar" >
+        <activity android:name="com.simpleflightcomputer.SplashScreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.simpleflightcomputer.FlightComputerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
+        <activity
+            android:name="com.simpleflightcomputer.WindTriangleActivity"
+            android:label="@string/title_activity_wind_triangle" android:theme="@style/FullscreenTheme">
+        </activity>
+        <activity
+            android:name="com.simpleflightcomputer.DistSpeedTimeActivity"
+            android:label="@string/title_activity_dist_speed_time" android:theme="@style/FullscreenTheme">
+        </activity>
+    </application>
+
+</manifest>
