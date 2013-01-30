@@ -16,3 +16,8 @@ Soon to support:
 
 * Wind Triangle solving for
   * True Air Speed / Heading (True Air Direction)
+
+Thanks
+------
+
+To Icons8.com for the icons
