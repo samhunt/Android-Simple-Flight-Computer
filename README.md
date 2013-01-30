@@ -20,4 +20,4 @@ Soon to support:
 Thanks
 ------
 
-To Icons8.com for the icons
+To [Icons8.com](http://Icons8.com) for the icons
