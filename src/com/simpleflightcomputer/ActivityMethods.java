@@ -23,7 +23,7 @@ public class ActivityMethods{
 		LinearLayout calculateLayout = newHorizontalLinearLayout(context);
 		float dip = context.getResources().getDisplayMetrics().density;
 		Log.d("DIP", ""+dip);
-		calculateLayout.setPadding((int)(60*dip), (int)(5*dip), (int)(60*dip), (int)(1*dip));
+		calculateLayout.setPadding((int)(60*dip), 0, (int)(60*dip), 0);
 		Button clear = new Button(context);
 		Button calc = new Button(context);
 		clear.setId(clearId);

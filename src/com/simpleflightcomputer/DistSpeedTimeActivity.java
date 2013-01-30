@@ -90,7 +90,7 @@ public class DistSpeedTimeActivity extends Activity {
 
     
     private void calculateDistanceSpeed(View v) {
-    	Log.d("Calculate", "DISTANCE SPEED TIME");
+    	//Log.d("Calculate", "DISTANCE SPEED TIME");
     	// get distancevalue
     	// get speedvalue
     	// get timevalue
@@ -123,7 +123,7 @@ public class DistSpeedTimeActivity extends Activity {
 	
 	private void setMain() {
 		FrameLayout content = (FrameLayout)findViewById(R.id.mainContent);
-		
+		float dip = getResources().getDisplayMetrics().density;
 		content.removeAllViews();
 		
 		//setup the content to look how I want it to look.
@@ -152,18 +152,18 @@ public class DistSpeedTimeActivity extends Activity {
 		//TextView distanceTextView = newTextView("Distance", 4, android.R.style.TextAppearance_Large);
 		ImageView  distanceImageView = new ImageView(DistSpeedTimeActivity.this);
 		distanceImageView.setImageResource(R.drawable.ruler);
-		distanceImageView.setPadding(30, 0, 30, 0);
-		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(130, 130);
+		distanceImageView.setPadding((int)(15*dip), 0, (int)(15*dip), 0);
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)(65*dip), (int)(65*dip));
 		distanceImageView.setLayoutParams(layoutParams);
-		Log.d("layout params", ""+distanceImageView.getLayoutParams());
+		//Log.d("layout params", ""+distanceImageView.getLayoutParams());
 		//TextView speedTextView = newTextView("Speed", 4, android.R.style.TextAppearance_Large);
 		ImageView  speedImageView = new ImageView(DistSpeedTimeActivity.this);
 		speedImageView.setImageResource(R.drawable.speed);
-		speedImageView.setPadding(30, 0, 30, 0);
+		speedImageView.setPadding((int)(15*dip), 0, (int)(15*dip), 0);
 		speedImageView.setLayoutParams(layoutParams);
 		ImageView  timeImageView = new ImageView(DistSpeedTimeActivity.this);
 		timeImageView.setImageResource(R.drawable.time);
-		timeImageView.setPadding(30, 0, 30, 0);
+		timeImageView.setPadding((int)(15*dip), 0, (int)(15*dip), 0);
 		timeImageView.setLayoutParams(layoutParams);
 		//TextView timeTextView = newTextView("Time", 4 , android.R.style.TextAppearance_Large);
 
@@ -198,7 +198,7 @@ public class DistSpeedTimeActivity extends Activity {
 		timeLayout.addView(timeEditText);
 		timeLayout.addView(timeSpinner);
 		
-		emptyLayout.setPadding(0, 50, 0, 0);
+		emptyLayout.setPadding(0, (int)(25*dip), 0, 0);
 		
 		calculateLayout = ActivityMethods.calcLayout(DistSpeedTimeActivity.this, 
 				R.id.clear_distance_speed, R.id.calculate_distance_speed);

@@ -3,6 +3,7 @@ package com.simpleflightcomputer;
 import java.text.DecimalFormat;
 
 import android.util.Log;
+import android.widget.Toast;
 
 public class FlightWindTriangle {
 	private String trueAirHeading,trueAirSpeed, windDirection, windSpeed, groundTrack, groundSpeed;

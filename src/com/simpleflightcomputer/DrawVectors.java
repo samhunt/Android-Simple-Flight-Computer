@@ -15,7 +15,7 @@ import android.view.WindowManager;
 public class DrawVectors extends View{
 	private double heading, trueAirSpeed, windDirection, windSpeed, course, groundSpeed;
 	private double maxWidth, maxHeight;
-	private float halfX, halfY;
+	private float offset, yMiddle, xMiddle;
 	private FloatPoint start, end; 
 	
 	public DrawVectors(Context context){
@@ -37,33 +37,39 @@ public class DrawVectors extends View{
 		//display.getSize(size);
 		//maxWidth = size.x;
 		maxWidth = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
+		maxHeight = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getHeight();
 	}
 	
 	@Override
 	protected void onDraw(Canvas canvas){
 		super.onDraw(canvas);
+		float dip = getResources().getDisplayMetrics().density;
+		xMiddle = (float) (maxWidth/2);
+		offset = (float) (maxHeight/8);
+		yMiddle = offset +10;
+		float len = offset*2;
 		
-		halfX = (float) (maxWidth/2);
-		halfY = 250;
+		
+		float middle = (float)(maxWidth /2);
 		
 		float[] pts = {0, 1, 2, 3};
 		Paint paint = new Paint();
 		paint.setColor(Color.BLACK);
 		paint.setStyle(Style.FILL);
-		canvas.drawLine(halfX, 100, halfX, 400, paint);
-		canvas.drawLine((halfX-200), halfY, (halfX+200), halfY, paint);
-		paint.setTextSize(25);
-		canvas.drawText("N(0°)", halfX, 100, paint);
-		canvas.drawText("E(90°)", halfX+200, halfY, paint);
-		canvas.drawText("W(180°)", halfX, 400, paint);
-		canvas.drawText("S(270°)", halfX-200, halfY, paint);
+		canvas.drawLine(xMiddle, 10, xMiddle, len+10, paint);
+		canvas.drawLine((xMiddle-offset), yMiddle, (xMiddle+offset), yMiddle, paint);
+		paint.setTextSize(10*dip);
+		canvas.drawText("N(0°)", xMiddle, 20, paint);
+		canvas.drawText("E(90°)", xMiddle+offset, yMiddle, paint);
+		canvas.drawText("W(180°)", xMiddle, yMiddle+offset, paint);
+		canvas.drawText("S(270°)", xMiddle-offset, yMiddle, paint);
 		
 		float headingEndX, headingEndY, courseEndX, courseEndY, scale =1;
 		
 		if(trueAirSpeed > groundSpeed){ // scale everything around tas
-			scale = (float) (150/trueAirSpeed);
+			scale = (float) (offset/trueAirSpeed);
 		}else{ //scale everything around gs
-			scale = (float) (150/groundSpeed); 
+			scale = (float) (offset/groundSpeed); 
 		}
 		trueAirSpeed *= scale;
 		groundSpeed *= scale;
@@ -161,36 +167,38 @@ public class DrawVectors extends View{
 	
 	private FloatPoint drawLine(double length, double angle, int arrows, Canvas canvas){
 		float x = 0,y = 0;
-		FloatPoint p;
+		FloatPoint p = new FloatPoint(x,y);
 		Paint paint = new Paint();
 		paint.setStyle(Style.FILL);
-		if(arrows == 1){ //heading
-			paint.setColor(Color.WHITE);
-			x = halfX+findX(length, angle);
-			y = halfY+findY(length, angle);
-			canvas.drawLine(halfX, halfY, x, y, paint);
-			//find the point in the middle of (halfx, halfy, x, y);
-			p = new FloatPoint(x,y);
-			FloatPoint start = new FloatPoint(halfX, halfY);
-			FloatPoint middle = start.getMiddle(p);
-			//add and subtract 90 + 45° therefore being able to draw arrow in the middle of the line.
-			arrow(start, p, length, angle, arrows, canvas, paint);
-			
-		}else if(arrows == 2){ //ground
-			paint.setColor(Color.GREEN);
-			x = halfX+findX(length, angle);
-			y = halfY+findY(length, angle);
-			canvas.drawLine(halfX, halfY, x, y, paint);
-			FloatPoint start = new FloatPoint(halfX, halfY);
-			p = new FloatPoint(x,y);
-			arrow(start, p, length, angle, arrows, canvas, paint);
-			
-		}else{ // =3 wind
-			paint.setColor(Color.RED);
-			canvas.drawLine(start.x, start.y, end.x, end.y, paint);
-			arrow(start, end, length, angle, arrows, canvas, paint);
-
-			p = new FloatPoint(x,y);
+		if(offset > 50){
+			if(arrows == 1){ //heading
+				paint.setColor(Color.WHITE);
+				x = xMiddle+findX(length, angle);
+				y = yMiddle+findY(length, angle);
+				canvas.drawLine(xMiddle, yMiddle, x, y, paint);
+				//find the point in the middle of (halfx, halfy, x, y);
+				p = new FloatPoint(x,y);
+				FloatPoint start = new FloatPoint(xMiddle, yMiddle);
+				FloatPoint middle = start.getMiddle(p);
+				//add and subtract 90 + 45° therefore being able to draw arrow in the middle of the line.
+				arrow(start, p, length, angle, arrows, canvas, paint);
+				
+			}else if(arrows == 2){ //ground
+				paint.setColor(Color.GREEN);
+				x = xMiddle+findX(length, angle);
+				y = yMiddle+findY(length, angle);
+				canvas.drawLine(xMiddle, yMiddle, x, y, paint);
+				FloatPoint start = new FloatPoint(xMiddle, yMiddle);
+				p = new FloatPoint(x,y);
+				arrow(start, p, length, angle, arrows, canvas, paint);
+				
+			}else{ // =3 wind
+				paint.setColor(Color.RED);
+				canvas.drawLine(start.x, start.y, end.x, end.y, paint);
+				arrow(start, end, length, angle, arrows, canvas, paint);
+	
+				p = new FloatPoint(x,y);
+			}
 		}
 		return p;
 	}

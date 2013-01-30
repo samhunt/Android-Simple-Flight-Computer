@@ -81,6 +81,8 @@ public class WindTriangleActivity extends Activity {
 		FlightWindTriangle fwt = new FlightWindTriangle(tah, tas, wd, ws, gt, gs);
 		fwt.solve();
 		if(fwt.isSolved()){
+			Toast.makeText(WindTriangleActivity.this, "Calculations completed successfully.",
+					Toast.LENGTH_SHORT).show();
 			FlightVector[] fva = fwt.getFlightVector();
 			((EditText)findViewById(R.id.true_heading_edit_text)).setText(((Double)fva[0].getDirection()).toString());
 			((EditText)findViewById(R.id.true_air_speed_edit_text)).setText(((Double)fva[0].getSpeed()).toString());
@@ -98,13 +100,13 @@ public class WindTriangleActivity extends Activity {
 		}else{
 	    	CharSequence text = "Only solving for wind speed and wind direction, or "+
 	    			" course and ground speed currently works.";
-	    	Toast t = Toast.makeText(WindTriangleActivity.this, text, Toast.LENGTH_LONG);
-	    	t.show();
+	    	Toast.makeText(WindTriangleActivity.this, text, Toast.LENGTH_LONG).show();
 		}
 	}
 	
 	private void setMain() {
 		FrameLayout content = (FrameLayout)findViewById(R.id.mainContent);
+		float dip = getResources().getDisplayMetrics().density;
 		
 		content.removeAllViews();
 			
@@ -112,7 +114,6 @@ public class WindTriangleActivity extends Activity {
 		String solving = "cgs"; // solve for course ground speed by default;
 		if(setup && extras != null) {
 			solving = extras.getString("solving");
-			Log.d("solving", solving);
 			if(solving.equals("cgs")){
 				current_position = 1;
 			}else{
@@ -144,7 +145,7 @@ public class WindTriangleActivity extends Activity {
 		wrapper.setOrientation(LinearLayout.VERTICAL);
 
 		LinearLayout changeSolvingLayout = ActivityMethods.newHorizontalLinearLayout(WindTriangleActivity.this);
-		changeSolvingLayout.setPadding(0, 0, 0, 30);
+		changeSolvingLayout.setPadding(0, 0, 0, (int)(15*dip));
 		LinearLayout thLayout = ActivityMethods.newHorizontalLinearLayout(WindTriangleActivity.this); // true heading
 		LinearLayout wdLayout = ActivityMethods.newHorizontalLinearLayout(WindTriangleActivity.this); // wind direction
 		LinearLayout gtLayout = ActivityMethods.newHorizontalLinearLayout(WindTriangleActivity.this); // ground track
@@ -165,8 +166,8 @@ public class WindTriangleActivity extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				Log.d("Position", ""+position);
-				Log.d("cur", ""+current_position);
+				//Log.d("Position", ""+position);
+				//Log.d("cur", ""+current_position);
 				if(position != current_position){
 					current_position = position;
 					setMain();
@@ -202,12 +203,12 @@ public class WindTriangleActivity extends Activity {
 		EditText thEditText = ActivityMethods.newEditText(WindTriangleActivity.this, R.id.true_heading_edit_text,
 				5, "Heading");
 		EditText tasEditText = ActivityMethods.newEditText(WindTriangleActivity.this, R.id.true_air_speed_edit_text, 
-				5, "TAS");
+				4, "TAS");
 		EditText wdEditText = ActivityMethods.newEditText(WindTriangleActivity.this, R.id.wind_direction_edit_text, 
-				5, "WD");
-		EditText wsEditText = ActivityMethods.newEditText(WindTriangleActivity.this, R.id.wind_speed_edit_text, 5, "WS");
+				5, "Direction");
+		EditText wsEditText = ActivityMethods.newEditText(WindTriangleActivity.this, R.id.wind_speed_edit_text, 4, "WS");
 		EditText gtEditText = ActivityMethods.newEditText(WindTriangleActivity.this, R.id.ground_track_edit_text, 5, "Course");
-		EditText gsEditText = ActivityMethods.newEditText(WindTriangleActivity.this, R.id.ground_speed_edit_text, 5, "GS");
+		EditText gsEditText = ActivityMethods.newEditText(WindTriangleActivity.this, R.id.ground_speed_edit_text, 4, "GS");
 		
 		
 		TextView solvingText = ActivityMethods.newTextView(WindTriangleActivity.this, "Answer");
@@ -215,7 +216,7 @@ public class WindTriangleActivity extends Activity {
 	            ViewGroup.LayoutParams.MATCH_PARENT,
 	            ViewGroup.LayoutParams.WRAP_CONTENT));
 		solvingText.setGravity(Gravity.CENTER);
-		solvingText.setTextAppearance(WindTriangleActivity.this, android.R.style.TextAppearance_Large);
+		solvingText.setTextAppearance(WindTriangleActivity.this, android.R.style.TextAppearance_Medium);
 		
 		solvingForLayout.addView(solvingText); 
 		
@@ -259,7 +260,7 @@ public class WindTriangleActivity extends Activity {
 		gtLayout.addView(gsEditText);
 		gtLayout.addView(gsUnit);
 		
-		emptyLayout.setPadding(0, 30, 0, 0);
+		emptyLayout.setPadding(0, (int)(5*dip), 0, 0);
 		
 		calculateLayout = ActivityMethods.calcLayout(WindTriangleActivity.this, 
 				R.id.clear_wind_triangle, R.id.calculate_wind_triangle);
@@ -272,14 +273,14 @@ public class WindTriangleActivity extends Activity {
 			wrapper.addView(emptyLayout);
 			wrapper.addView(calculateLayout);
 			wrapper.addView(solvingForLayout);
-			wdLayout.setPadding(0, 20, 0, 0);
+			wdLayout.setPadding(0, (int)(5*dip), 0, 0);
 			wrapper.addView(wdLayout);
 		}else{
 			wrapper.addView(wdLayout);
 			wrapper.addView(emptyLayout);
 			wrapper.addView(calculateLayout);
 			wrapper.addView(solvingForLayout);
-			gtLayout.setPadding(0, 20, 0, 0);
+			gtLayout.setPadding(0, (int)(5*dip), 0, 0);
 			wrapper.addView(gtLayout);
 		}
 		
